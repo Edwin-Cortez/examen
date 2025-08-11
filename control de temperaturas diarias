@@ -1,0 +1,97 @@
+import java.util.Scanner;
+
+public class ControlTemperaturas {
+    private double[] temperaturas = new double[7];
+    private int contadorTemperaturas = 0;
+
+    public static void main(String[] args) {
+        ControlTemperaturas control = new ControlTemperaturas();
+        control.menu();
+    }
+
+    public void menu() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("Menú de Opciones:");
+            System.out.println("1. Ingresar temperaturas");
+            System.out.println("2. Mostrar todas las temperaturas");
+            System.out.println("3. Mostrar temperatura máxima");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    ingresarTemperaturas(scanner);
+                    break;
+                case 2:
+                    mostrarTemperaturas();
+                    break;
+                case 3:
+                    mostrarTemperaturaMaxima();
+                    break;
+                case 4:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        } while (opcion != 4);
+    }
+
+    public void ingresarTemperaturas(Scanner scanner) {
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Ingrese la temperatura del día " + (i + 1) + ": ");
+            temperaturas[i] = scanner.nextDouble();
+            contadorTemperaturas++;
+        }
+    }
+
+    public void mostrarTemperaturas() {
+        if (contadorTemperaturas == 0) {
+            System.out.println("No se han ingresado temperaturas.");
+            return;
+        }
+        System.out.println("Temperaturas ingresadas:");
+        for (int i = 0; i < contadorTemperaturas; i++) {
+            System.out.println("Día " + (i + 1) + ": " + temperaturas[i]);
+        }
+    }
+
+    public void mostrarTemperaturaMaxima() {
+        if (contadorTemperaturas == 0) {
+            System.out.println("No se han ingresado temperaturas.");
+            return;
+        }
+        double maxima = obtenerTemperaturaMaxima(temperaturas);
+        System.out.println("La temperatura máxima es: " + maxima);
+    }
+
+    public double obtenerTemperaturaMaxima(double[] temperaturas) {
+        double max = temperaturas[0];
+        for (double temp : temperaturas) {
+            if (temp > max) {
+                max = temp;
+            }
+        }
+        return max;
+    }
+
+    public void mostrarMaxima(double temperatura) {
+        System.out.println("Temperatura máxima: " + temperatura);
+    }
+
+    public void mostrarMaxima(double temperatura, String dia) {
+        System.out.println("Temperatura máxima en " + dia + ": " + temperatura);
+    }
+
+    // metodo recursivo para calcular la suma total de las temperaturas
+    public double sumaTemperaturas(double[] temperaturas, int index) {
+        if (index < 0) {
+            return 0;
+        }
+        return temperaturas[index] + sumaTemperaturas(temperaturas, index - 1);
+    }
+}
